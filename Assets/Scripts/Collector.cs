@@ -4,6 +4,7 @@ public class Collector : MonoBehaviour
 {
     public int score= 0;
     public bool hasKey = true;
+    public bool hasLight = false;
     public TextMeshProUGUI textScore;
     public TextMeshProUGUI notificationText;
     void Start()
@@ -11,7 +12,7 @@ public class Collector : MonoBehaviour
         UpdateTextScore();
     }
    
-   public void OnTriggerEnter2D(Collider2D other)
+   private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.CompareTag("Collectable"))
         {
@@ -27,18 +28,26 @@ public class Collector : MonoBehaviour
             {
                 hasKey = true;
                 score= score + 6;
+                Destroy(other.gameObject);
                 UpdateTextScore();
                 ShowNotification("Key Collected!");
-
-                Destroy(other.gameObject);
                 Debug.Log("Key Collected!");  
             }
-        if (score >=3 && hasKey) 
+        if (score ==15 && hasKey) 
             {
                 Debug.Log("You Won!");
                 ShowNotification("You Won!");
             }
+
+        if(other.CompareTag("Light"))
+        {
+            hasLight = true;
+            Destroy(gameObject);
+            ShowNotification("Demasiado cerca, la luz disolvió la sombra] ");
+            Debug.Log("You Lost!");
         }
+        }
+
     
     void UpdateTextScore()
 {
