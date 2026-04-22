@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement; 
 
 public class Collector : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class Collector : MonoBehaviour
     public TextMeshProUGUI textScore2;
     public TextMeshProUGUI notificationText;
     public TextMeshProUGUI keyText; 
+
+    public GameObject loseScreen; // 
+    public GameObject winScreen;  // 
 
     void Start()
     {
@@ -51,6 +55,8 @@ public class Collector : MonoBehaviour
         {
             Debug.Log("You Won!");
             ShowNotification("You Won!");
+            winScreen.SetActive(true); // 
+            gameObject.SetActive(false); // 
         }
 
         if(other.CompareTag("Light"))
@@ -59,18 +65,34 @@ public class Collector : MonoBehaviour
             Destroy(gameObject);
             ShowNotification("Demasiado cerca, la luz disolvió la sombra ");
             Debug.Log("You Lost!");
+            loseScreen.SetActive(true); 
         }
     }
 
     void UpdateTextScore()
     {
-        textScore.text = "Shirt: " + score + "/10";
-        textScore2.text = "Socks: " + score2 + "/10";
+        textScore.text = "Shirt: " + score + "/8";
+        textScore2.text = "Socks: " + score2 + "/8";
         keyText.text = "Key: " + keyCount + "/1"; 
     }
 
     void ShowNotification(string message)
-    {
-        notificationText.text = message; 
-    }
+{
+    StopAllCoroutines(); 
+    notificationText.text = message;
+    StartCoroutine(ClearNotification());
 }
+  //botón para reiniciar el juego:
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
+    }
+System.Collections.IEnumerator ClearNotification()
+{
+    yield return new WaitForSeconds(1f);
+    notificationText.text = "";
+}
+
+}
+
