@@ -16,8 +16,7 @@ public class Collector : MonoBehaviour
     public TextMeshProUGUI notificationText;
     public TextMeshProUGUI keyText; 
 
-    public GameObject loseScreen; // 
-    public GameObject winScreen;  // 
+    public GameObject loseScreen; 
 
     void Start()
     {
@@ -55,8 +54,7 @@ public class Collector : MonoBehaviour
         {
             Debug.Log("You Won!");
             ShowNotification("You Won!");
-            winScreen.SetActive(true); // 
-            gameObject.SetActive(false); // 
+            gameObject.SetActive(false); 
         }
 
         if(other.CompareTag("Light"))
