@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameManager gameManager;
     public float speed = 5f;
     
     void Start()
     {
+        
         
     }
 
@@ -19,4 +21,17 @@ public class PlayerController : MonoBehaviour
         transform.Translate(direction * speed * Time.deltaTime); 
         
     }  
+
+    void OnTriggerEnter2D(Collider2D col)
+{
+    if (col.CompareTag("Light"))
+    {
+        gameManager.MostrarMuerte();
+    }
+}
+
+ 
+
+
+    
 }

@@ -1,61 +1,76 @@
 using UnityEngine;
 using TMPro;
+
 public class Collector : MonoBehaviour
 {
-    public int score= 0;
-    public bool hasKey = true;
+    public int score = 0;
+    public int score2 = 0;
+    public int keyCount = 0;
+
+    public bool hasKey = false;
     public bool hasLight = false;
+
     public TextMeshProUGUI textScore;
+    public TextMeshProUGUI textScore2;
     public TextMeshProUGUI notificationText;
+    public TextMeshProUGUI keyText; 
+
     void Start()
     {
         UpdateTextScore();
     }
-   
-   private void OnTriggerEnter2D(Collider2D other)
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.CompareTag("Collectable"))
         {
-            score= score + 1; 
+            score = score + 1; 
             Destroy(other.gameObject);
             UpdateTextScore();
-            ShowNotification("Collected!");
-            Debug.Log("Collected!");
-            Debug.Log("Score: " + score);
+            ShowNotification("Collected shirt!");
+        }
+
+        if(other.CompareTag("Collectable2"))
+        {
+            score2 = score2 + 1; 
+            Destroy(other.gameObject);
+            UpdateTextScore();
+            ShowNotification("Collected socks!");
         }
 
         if(other.CompareTag("Key"))
-            {
-                hasKey = true;
-                score= score + 6;
-                Destroy(other.gameObject);
-                UpdateTextScore();
-                ShowNotification("Key Collected!");
-                Debug.Log("Key Collected!");  
-            }
-        if (score ==15 && hasKey) 
-            {
-                Debug.Log("You Won!");
-                ShowNotification("You Won!");
-            }
+        {
+            keyCount = keyCount + 1;
+            hasKey = true;
+            Destroy(other.gameObject);
+            UpdateTextScore();
+            ShowNotification("Key Collected!");
+        }
+
+        if (score >= 8 && score2 >= 8 && keyCount >= 1) 
+        {
+            Debug.Log("You Won!");
+            ShowNotification("You Won!");
+        }
 
         if(other.CompareTag("Light"))
         {
             hasLight = true;
             Destroy(gameObject);
-            ShowNotification("Demasiado cerca, la luz disolvió la sombra] ");
+            ShowNotification("Demasiado cerca, la luz disolvió la sombra ");
             Debug.Log("You Lost!");
         }
-        }
-
-    
-    void UpdateTextScore()
-{
-    textScore.text = "Score:" + score;
-}
-    void ShowNotification(string message)
-    {
-        notificationText.text = message;
     }
 
+    void UpdateTextScore()
+    {
+        textScore.text = "Shirt: " + score + "/8";
+        textScore2.text = "Socks: " + score2 + "/8";
+        keyText.text = "Key: " + keyCount + "/1"; 
+    }
+
+    void ShowNotification(string message)
+    {
+        notificationText.text = message; 
+    }
 }
