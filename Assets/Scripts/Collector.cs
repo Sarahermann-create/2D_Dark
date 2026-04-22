@@ -64,8 +64,8 @@ public class Collector : MonoBehaviour
 
     void UpdateTextScore()
     {
-        textScore.text = "Shirt: " + score + "/8";
-        textScore2.text = "Socks: " + score2 + "/8";
+        textScore.text = "Shirt: " + score + "/10";
+        textScore2.text = "Socks: " + score2 + "/10";
         keyText.text = "Key: " + keyCount + "/1"; 
     }
 
